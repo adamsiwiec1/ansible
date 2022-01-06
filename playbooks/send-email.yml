@@ -1,0 +1,22 @@
+---
+- name: Send Email Hello World
+  hosts: nodes
+  tasks:
+    - name: Create Python Email Script
+      copy:
+        dest: "send_email.py"
+        content: |
+          import smtplib
+          smtp = smtplib.SMTP('smtp.gmail.com', 587)
+          smtp.ehlo()
+          smtp.starttls()
+          smtp.login('daemonjohnson30@gmail.com', 'Daemon12345#!')
+          smtp.sendmail('daemonjohnson30@gmail.com', 'adam1.siwiec@gmail.com', 'hello from node 1')
+
+    - name: Send Email
+      command: python3 send_email.py
+
+    - name: Remove Python Email Script
+      file:
+        path: "send_email.py"
+        state: absent

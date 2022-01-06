@@ -1,0 +1,6 @@
+---
+- name: Leave a Mark Playbook
+  hosts: nodes
+  tasks:
+    - name: Leave a mark
+      command: "touch ansiblewushere"
