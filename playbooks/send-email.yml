@@ -1,17 +1,18 @@
 ---
 - name: Send Email Hello World
-  hosts: nodes
+  hosts: nodes,aws
   tasks:
     - name: Create Python Email Script
       copy:
         dest: "send_email.py"
         content: |
           import smtplib
+          import socket
           smtp = smtplib.SMTP('smtp.gmail.com', 587)
           smtp.ehlo()
           smtp.starttls()
           smtp.login('daemonjohnson30@gmail.com', 'Daemon12345#!')
-          smtp.sendmail('daemonjohnson30@gmail.com', 'adam1.siwiec@gmail.com', 'hello from node 1')
+          smtp.sendmail('daemonjohnson30@gmail.com', 'adam1.siwiec@gmail.com', f'hello from {socket.gethostname()}')
 
     - name: Send Email
       command: python3 send_email.py
